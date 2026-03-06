@@ -1,4 +1,4 @@
-# 🧠 Mini PaaS — Cloud Deployment Platform
+# 🧠 # 🚀 Mini-PaaS: A Self-Hosted Platform-as-a-Service Built with Docker, NGINX, and Linux
 
 > A simplified cloud deployment platform built from scratch to understand the core infrastructure behind modern cloud services.
 
