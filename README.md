@@ -1,4 +1,4 @@
-# # 🧠 Mini-PaaS: A Self-Hosted Platform-as-a-Service Built with Docker, NGINX, and Linux
+# 🧠 Mini-PaaS: A Self-Hosted Platform-as-a-Service Built with Docker, NGINX, and Linux
 
 > A simplified cloud deployment platform built from scratch to understand the core infrastructure behind modern cloud services.
 
@@ -49,6 +49,10 @@ The script automatically:
 - Configures the NGINX reverse proxy
 - Reloads NGINX
 
+**Deployment in action:**
+
+<img width="1428" height="877" alt="deploy script output" src="https://github.com/user-attachments/assets/0cce2534-1337-40ae-bd58-9a872b1cad83" />
+
 ---
 
 ### 🌐 Reverse Proxy Routing
@@ -62,6 +66,10 @@ http://app3.local
 
 Handled via NGINX reverse proxy.
 
+**Live app served at `app3.local`:**
+
+<img width="588" height="397" alt="app3.local in browser" src="https://github.com/user-attachments/assets/ac7df96c-961f-4fe8-a989-f35467c252c7" />
+
 ---
 
 ### 🐳 Dockerized Applications
@@ -72,6 +80,10 @@ Each application runs in an isolated Docker container.
 - Environment isolation
 - Reproducible builds
 - Easy scaling
+
+**Running containers (`docker ps`):**
+
+<img width="538" height="122" alt="docker ps output" src="https://github.com/user-attachments/assets/6f33d67c-5724-41c7-b0c0-f4102e5338ab" />
 
 ---
 
@@ -197,8 +209,9 @@ docker compose up -d
 | Prometheus | http://localhost:9090 |
 | cAdvisor | http://localhost:8082 |
 
-> **Default Grafana login** — Username: `admin` / Password: `admin`
-Password was changed by the author.
+> **Default Grafana login** — Username: `admin` / Password: `admin`  
+> ⚠️ Password was changed by the author.
+
 ---
 
 ## 🎯 What This Project Demonstrates
@@ -209,6 +222,19 @@ Password was changed by the author.
 - Infrastructure automation with Bash
 - Observability and monitoring systems
 - DevOps fundamentals
+
+---
+
+## 📝 A Note on the Frontend
+
+Since the primary focus of this project is understanding **hosting infrastructure** — container orchestration, reverse proxy routing, deployment automation, and observability — very little attention was given to the `index.html` files served by each app.
+
+The pages are intentionally bland and minimal; they exist purely as placeholder apps to validate that:
+- Containers are running correctly
+- NGINX is routing traffic to the right service
+- The deployment pipeline works end-to-end
+
+In a real-world PaaS, the hosted application's frontend would be entirely up to the developer deploying it. The platform's job is just to serve it reliably. 🚀
 
 ---
 
