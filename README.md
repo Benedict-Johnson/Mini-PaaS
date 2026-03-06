@@ -68,7 +68,7 @@ Handled via NGINX reverse proxy.
 
 **Live app served at `app3.local`:**
 
-<img width="588" height="397" alt="app3.local in browser" src="https://github.com/user-attachments/assets/ac7df96c-961f-4fe8-a989-f35467c252c7" />
+<img width="538" height="122" alt="docker ps output" src="https://github.com/user-attachments/assets/6f33d67c-5724-41c7-b0c0-f4102e5338ab" />
 
 ---
 
@@ -83,7 +83,7 @@ Each application runs in an isolated Docker container.
 
 **Running containers (`docker ps`):**
 
-<img width="538" height="122" alt="docker ps output" src="https://github.com/user-attachments/assets/6f33d67c-5724-41c7-b0c0-f4102e5338ab" />
+<img width="588" height="397" alt="app3.local in browser" src="https://github.com/user-attachments/assets/ac7df96c-961f-4fe8-a989-f35467c252c7" />
 
 ---
 
