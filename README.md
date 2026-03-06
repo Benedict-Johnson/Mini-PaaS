@@ -211,6 +211,7 @@ docker compose up -d
 
 > **Default Grafana login** — Username: `admin` / Password: `admin`  
 > ⚠️ Password was changed by the author.
+<img width="1538" height="897" alt="image" src="https://github.com/user-attachments/assets/940498d8-f347-4368-af48-4cc009ba5c31" />
 
 ---
 
