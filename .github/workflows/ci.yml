@@ -1,13 +1,12 @@
-name: Mini-PaaS CI
+name: Mini-PaaS CI/CD
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
+    branches: ["main"]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -17,9 +16,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Build Docker image
+      - name: Deploy to Kubernetes
         run: |
-          docker build -t ${{ matrix.app }}:ci ./${{ matrix.app }}
-
-      - name: Verify build
-        run: echo "${{ matrix.app }} build successful"
+          cd ~/mini-paas
+          chmod +x scripts/deploy-k8s.sh
+          ./scripts/deploy-k8s.sh ${{ matrix.app }}
