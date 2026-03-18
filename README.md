@@ -179,8 +179,8 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 | **metrics-server** | Provides resource metrics consumed by HPA |
 | **Grafana** | Visualizes metrics via pre-configured dashboards |
 
-![Grafana Dashboard](docs/images/grafana-dashboard.png)
-*↑ Replace with your Grafana dashboard screenshot*
+<img width="1917" height="855" alt="image" src="https://github.com/user-attachments/assets/4ff27a23-aefc-42a9-a68c-f8ba88f98d95" />
+
 
 ---
 
