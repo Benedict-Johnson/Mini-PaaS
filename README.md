@@ -95,31 +95,52 @@ The pipeline is triggered on every `push` to the repository.
 ---
 
 ## 📁 Project Structure
-
 ```
 mini-paas/
 │
-├── apps/                   # Application source code
-│   ├── app1/
-│   └── app2/
+├── app1/
+│   ├── Dockerfile
+│   └── index.html
 │
-├── k8s/                    # Kubernetes manifests
-│   ├── base/               # Shared configs (Ingress, Namespace)
-│   └── apps/               # Per-app Deployments, Services, HPA
+├── app2/
+├── app3/
+├── app4/
 │
-├── scripts/                # Deployment and utility scripts
-│   └── deploy.sh
+├── k8s/
+│   ├── base/
+│   │   └── ingress.yaml
+│   │
+│   ├── apps/
+│   │   ├── app1/
+│   │   │   ├── deployment.yaml
+│   │   │   ├── service.yaml
+│   │   │   └── hpa.yaml
+│   │   ├── app2/
+│   │   ├── app3/
+│   │   └── app4/
+│   │
+│   └── README.md
 │
-├── monitoring/             # Prometheus, Grafana, cAdvisor configs
-│   ├── prometheus/
-│   └── grafana/
-│
-├── legacy/                 # Original Docker + NGINX setup (archived)
+├── monitoring/
 │   ├── docker-compose.yml
-│   └── nginx.conf
+│   └── prometheus.yml
 │
-└── docs/                   # Documentation and images
-    └── images/
+├── scripts/
+│   └── deploy-k8s.sh
+│
+├── legacy/
+│   └── README.md
+│
+├── docs/
+│   └── architecture-notes.md
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── deploy.sh                  # legacy deploy script
+├── .gitignore
+└── README.md
 ```
 
 ---
