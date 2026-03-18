@@ -1,255 +1,226 @@
-# 🧠 Mini-PaaS: A Self-Hosted Platform-as-a-Service Built with Docker, NGINX, and Linux
+# 🚀 Mini-PaaS
 
-> A simplified cloud deployment platform built from scratch to understand the core infrastructure behind modern cloud services.
+> A local Platform-as-a-Service that evolved from Docker-based manual deployments into a Kubernetes-native orchestration system running on Minikube — with a full CI/CD pipeline and monitoring stack.
 
-The system automates **container deployment**, **reverse proxy routing**, **domain mapping**, **monitoring**, and **logging**.
-
----
-
-## 🏗️ System Architecture
-```
-                🌐 Browser
-                     │
-                     ▼
-              NGINX Reverse Proxy
-                     │
-        ┌────────────┴────────────┐
-        ▼                         ▼
-   Docker Container          Docker Container
-        │                         │
-       App1                     App2 / App3
-        │                         │
-        └──────────────┬──────────┘
-                       ▼
-                   Docker Engine
-                       │
-        ┌──────────────┴──────────────┐
-        ▼                              ▼
-     cAdvisor                     Prometheus
-        │                              │
-        └──────────────► Grafana ◄─────┘
-                    Monitoring Dashboard
-```
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
+[![Kubernetes](https://img.shields.io/badge/Orchestration-Kubernetes-326CE5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![Minikube](https://img.shields.io/badge/Runtime-Minikube-F5A623?logo=kubernetes&logoColor=white)](https://minikube.sigs.k8s.io/)
+[![Prometheus](https://img.shields.io/badge/Monitoring-Prometheus-E6522C?logo=prometheus&logoColor=white)](https://prometheus.io/)
+[![Grafana](https://img.shields.io/badge/Dashboards-Grafana-F46800?logo=grafana&logoColor=white)](https://grafana.com/)
+[![Status](https://img.shields.io/badge/Environment-Local%20Only-yellow)]()
 
 ---
 
-## ⚙️ Features
+## 📌 What Is This?
 
-### 🚀 Application Deployment
+Mini-PaaS is a **learning-driven infrastructure project** that simulates a Platform-as-a-Service environment on a local machine. It started as a Bash + Docker + NGINX setup and was systematically rebuilt into a Kubernetes-based system with automated deployments, health checks, autoscaling, and monitoring.
 
-Deploy containerized applications with a single command:
-```bash
-./deploy.sh <app-name>
-```
-
-The script automatically:
-- Builds the Docker image
-- Finds an available port
-- Runs the container
-- Configures the NGINX reverse proxy
-- Reloads NGINX
-
-**Deployment in action:**
-
-<img width="1428" height="877" alt="deploy script output" src="https://github.com/user-attachments/assets/0cce2534-1337-40ae-bd58-9a872b1cad83" />
+This project is scoped to **local development** using Minikube — it is not a cloud-deployed system.
 
 ---
 
-### 🌐 Reverse Proxy Routing
+## 🔄 Evolution: Legacy → Improved
 
-Apps are accessible via clean domains instead of raw ports:
+| Aspect | 🗂 Legacy System | ⚡ Improved System |
+|---|---|---|
+| **Runtime** | Docker (manual `docker run`) | Kubernetes via Minikube |
+| **Routing** | NGINX reverse proxy | Kubernetes Ingress |
+| **Scaling** | Manual container restarts | Horizontal Pod Autoscaler (HPA) |
+| **Automation** | Bash scripts | GitHub Actions CI/CD pipeline |
+| **Health Checks** | None | Liveness & Readiness Probes |
+| **Resource Control** | None | CPU/Memory requests & limits |
+| **Monitoring** | None | Prometheus + Grafana + cAdvisor |
+| **Deployment Model** | Imperative | Declarative (YAML manifests) |
+
+---
+
+## 🏗 Architecture
+
 ```
-http://app1.local
-http://app2.local
-http://app3.local
+GitHub Repository
+      │
+      ▼
+GitHub Actions (CI/CD Trigger on Push)
+      │
+      ▼
+Self-Hosted Runner (WSL on local machine)
+      │
+      ├── Builds Docker images
+      ├── Applies Kubernetes manifests
+      │
+      ▼
+Minikube Cluster
+      │
+      ├── Deployments (per app)
+      ├── Services (ClusterIP)
+      ├── Ingress (domain-based routing)
+      ├── HPA (autoscaling)
+      └── Monitoring namespace
+            ├── Prometheus
+            ├── Grafana
+            └── cAdvisor + metrics-server
 ```
 
-Handled via NGINX reverse proxy.
-
-**Live app served at `app3.local`:**
-
-<img width="538" height="122" alt="docker ps output" src="https://github.com/user-attachments/assets/6f33d67c-5724-41c7-b0c0-f4102e5338ab" />
+![Architecture Diagram](docs/images/architecture.png)
+*↑ Replace with your architecture diagram*
 
 ---
 
-### 🐳 Dockerized Applications
+## ⚙️ CI/CD Pipeline
 
-Each application runs in an isolated Docker container.
+The pipeline is triggered on every `push` to the repository.
 
-**Benefits:**
-- Environment isolation
-- Reproducible builds
-- Easy scaling
+**Flow:**
+1. **Trigger** — Push to `main` kicks off the workflow
+2. **Matrix Build** — Multiple apps are built in parallel using a job matrix
+3. **Self-Hosted Runner** — A runner in WSL executes the deployment script locally
+4. **Deploy Script** — Builds Docker images (via Minikube's Docker daemon) and applies `kubectl` manifests
+5. **Rollout** — Kubernetes performs a rolling update automatically
 
-**Running containers (`docker ps`):**
-
-<img width="588" height="397" alt="app3.local in browser" src="https://github.com/user-attachments/assets/ac7df96c-961f-4fe8-a989-f35467c252c7" />
-
----
-
-### 📊 Monitoring Stack
-
-| Tool | Purpose |
-|------|---------|
-| cAdvisor | Container metrics |
-| Prometheus | Metrics collection |
-| Grafana | Visualization dashboards |
-
-**Available metrics:**
-- Container CPU usage
-- Memory usage
-- Container uptime
-- Resource monitoring
+![CI/CD Pipeline](docs/images/cicd-pipeline.png)
+*↑ Replace with your GitHub Actions workflow screenshot*
 
 ---
 
-### 📁 Per-Application Logs
+## ✨ Features
 
-Each deployed application has its own log directory:
-```
-logs/app1
-logs/app2
-logs/app3
-```
-
----
-
-### 🔒 Security
-
-Basic security hardening implemented:
-- Firewall via UFW
-- Container restart policies
-- Health checks
-- Isolated containers
+- 🗂 **Multi-application deployment** — Multiple independent apps managed from a single repo
+- 🤖 **Automated CI/CD** — Push-to-deploy via GitHub Actions with a self-hosted WSL runner
+- 🌐 **Ingress-based routing** — Custom domain routing (e.g., `app1.local`, `app2.local`)
+- 📈 **Horizontal Pod Autoscaling** — HPA scales pods based on CPU utilization
+- 🩺 **Health checks** — Liveness and readiness probes for every deployment
+- 🔒 **Resource management** — CPU/memory requests and limits per container
+- 📊 **Local monitoring stack** — Prometheus, Grafana, cAdvisor, and metrics-server
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
+
 ```
 mini-paas/
 │
-├── app1/
-│   ├── Dockerfile
-│   └── index.html
+├── apps/                   # Application source code
+│   ├── app1/
+│   └── app2/
 │
-├── app2/
-│   ├── Dockerfile
-│   └── index.html
+├── k8s/                    # Kubernetes manifests
+│   ├── base/               # Shared configs (Ingress, Namespace)
+│   └── apps/               # Per-app Deployments, Services, HPA
 │
-├── app3/
-│   ├── Dockerfile
-│   └── index.html
+├── scripts/                # Deployment and utility scripts
+│   └── deploy.sh
 │
-├── monitoring/
+├── monitoring/             # Prometheus, Grafana, cAdvisor configs
+│   ├── prometheus/
+│   └── grafana/
+│
+├── legacy/                 # Original Docker + NGINX setup (archived)
 │   ├── docker-compose.yml
-│   └── prometheus.yml
+│   └── nginx.conf
 │
-├── logs/
-├── deploy.sh
-├── .gitignore
-└── README.md
+└── docs/                   # Documentation and images
+    └── images/
 ```
 
 ---
 
-## 🛠️ Technologies Used
+## 🚢 Deployment Flow
 
-| Technology | Role |
-|-----------|------|
-| Linux (WSL2 Ubuntu) | Host environment |
-| Docker | Container runtime |
-| NGINX | Reverse proxy |
-| Bash | Deployment automation |
-| Prometheus | Metrics collection |
-| Grafana | Monitoring dashboard |
-| cAdvisor | Docker metrics exporter |
-
----
-
-## 🚀 How to Deploy an App
-
-**1️⃣ Create an app folder**
-```bash
-mkdir app4
 ```
-
-**2️⃣ Add your files**
-
-`Dockerfile`
-```dockerfile
-FROM nginx:alpine
-COPY index.html /usr/share/nginx/html/index.html
-EXPOSE 80
-```
-
-`index.html` — your app's HTML content
-
-**3️⃣ Deploy**
-```bash
-./deploy.sh app4
-```
-
-**4️⃣ Access in browser**
-```
-http://app4.local
+1. Developer pushes code to GitHub
+         │
+         ▼
+2. GitHub Actions detects push → triggers workflow
+         │
+         ▼
+3. Self-hosted runner (WSL) picks up the job
+         │
+         ▼
+4. deploy.sh builds Docker image using Minikube's daemon
+   → docker build + kubectl apply -f k8s/apps/<app>/
+         │
+         ▼
+5. Kubernetes performs rolling update
+   → Old pods terminate gracefully
+   → New pods pass readiness probes before serving traffic
 ```
 
 ---
 
 ## 📊 Monitoring
 
-Start the monitoring stack:
-```bash
-docker compose up -d
-```
+The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 
-| Service | URL |
-|---------|-----|
-| Grafana | http://localhost:3000 |
-| Prometheus | http://localhost:9090 |
-| cAdvisor | http://localhost:8082 |
+| Component | Role |
+|---|---|
+| **Prometheus** | Scrapes metrics from cAdvisor and app endpoints |
+| **cAdvisor** | Exposes per-container CPU, memory, and network metrics |
+| **metrics-server** | Provides resource metrics consumed by HPA |
+| **Grafana** | Visualizes metrics via pre-configured dashboards |
 
-> **Default Grafana login** — Username: `admin` / Password: `admin`  
-> ⚠️ Password was changed by the author.
-<img width="1538" height="897" alt="image" src="https://github.com/user-attachments/assets/940498d8-f347-4368-af48-4cc009ba5c31" />
+![Grafana Dashboard](docs/images/grafana-dashboard.png)
+*↑ Replace with your Grafana dashboard screenshot*
 
 ---
 
-## 🎯 What This Project Demonstrates
+## 🖼 Screenshots
 
-- Linux systems administration
-- Containerization with Docker
-- Reverse proxy configuration
-- Infrastructure automation with Bash
-- Observability and monitoring systems
-- DevOps fundamentals
+<details>
+<summary>Kubernetes Cluster Output</summary>
 
----
+![kubectl get all](docs/images/kubectl-output.png)
 
-## 📝 A Note on the Frontend
+</details>
 
-Since the primary focus of this project is understanding **hosting infrastructure** — container orchestration, reverse proxy routing, deployment automation, and observability — very little attention was given to the `index.html` files served by each app.
+<details>
+<summary>App Routing via Ingress</summary>
 
-The pages are intentionally bland and minimal; they exist purely as placeholder apps to validate that:
-- Containers are running correctly
-- NGINX is routing traffic to the right service
-- The deployment pipeline works end-to-end
+![curl routing output](docs/images/curl-routing.png)
 
-In a real-world PaaS, the hosted application's frontend would be entirely up to the developer deploying it. The platform's job is just to serve it reliably. 🚀
+</details>
 
----
+<details>
+<summary>GitHub Actions — Successful Run</summary>
 
-## 📌 Future Improvements
+![GitHub Actions](docs/images/github-actions.png)
 
-- [ ] Automatic SSL via Let's Encrypt
-- [ ] Dynamic DNS routing
-- [ ] Container orchestration
-- [ ] Auto scaling
-- [ ] Deployment dashboard UI
-- [ ] Kubernetes integration
+</details>
 
 ---
 
-## 📜 License
+## 🧠 Key Learnings
 
-This project is for educational and demonstration purposes.
+- **Container → Orchestration mindset shift** — Moving from imperative `docker run` commands to declarative Kubernetes manifests changes how you reason about infrastructure
+- **Kubernetes primitives in practice** — Hands-on experience with Deployments, Services, Ingress, ConfigMaps, HPA, and probes
+- **CI/CD with self-hosted runners** — Designing a pipeline that bridges cloud-hosted GitHub Actions with a local Minikube environment via WSL
+- **Resource management** — Understanding the impact of CPU/memory requests and limits on scheduling and autoscaling decisions
+
+---
+
+## ⚠️ Limitations
+
+- **Local-only** — Runs entirely on Minikube; not deployed to any cloud provider
+- **Not production-grade** — No multi-tenancy, no RBAC, no network policies
+- **Single-node cluster** — Minikube simulates a cluster but runs on one machine
+- **Manual secrets management** — No Vault or Sealed Secrets integration yet
+
+---
+
+## 🔮 Future Improvements
+
+- [ ] **kube-state-metrics** — Richer cluster-level monitoring
+- [ ] **CLI tool** — Dynamic app onboarding without editing YAML manually
+- [ ] **Cloud deployment** — Port the setup to EKS or GKE
+- [ ] **Logging stack** — Integrate Loki + Promtail or the ELK stack
+- [ ] **RBAC & namespace isolation** — Basic multi-tenancy model
+- [ ] **Helm charts** — Replace raw manifests with parameterized Helm templates
+
+---
+
+## 🛠 Tech Stack
+
+`Kubernetes` · `Minikube` · `Docker` · `GitHub Actions` · `Prometheus` · `Grafana` · `cAdvisor` · `NGINX Ingress` · `Bash` · `WSL`
+
+---
+
+> **Note:** This project was built for learning purposes to understand Kubernetes, CI/CD, and observability concepts in a local environment. All claims are scoped to what the system actually does.
