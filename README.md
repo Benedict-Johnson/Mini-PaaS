@@ -36,7 +36,9 @@ This project is scoped to **local development** using Minikube — it is not a c
 
 ## 🏗 Architecture
 
-<img width="642" height="511" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/18313bc5-02ac-4bce-a793-1460ece201cb" />
+<div align="center">
+<img width="642" height="511" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/18313bc5-02ac-4bce-a793-1460ece201cb" />
+</div>
 
 ---
 
@@ -51,8 +53,9 @@ The pipeline is triggered on every `push` to the repository.
 4. **Deploy Script** — Builds Docker images (via Minikube's Docker daemon) and applies `kubectl` manifests
 5. **Rollout** — Kubernetes performs a rolling update automatically
 
-<img width="537" height="432" alt="image" src="https://github.com/user-attachments/assets/47c5b673-fcdb-4b9a-bd07-0e6d31a610fb" />
-
+<div align="center">
+<img width="537" height="432" alt="CI/CD Pipeline" src="https://github.com/user-attachments/assets/47c5b673-fcdb-4b9a-bd07-0e6d31a610fb" />
+</div>
 
 ---
 
@@ -120,7 +123,6 @@ mini-paas/
 ---
 
 ## 🚢 Deployment Flow
-
 ```
 1. Developer pushes code to GitHub
          │
@@ -146,42 +148,41 @@ mini-paas/
 
 The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 
-| Component | Role |
-|---|---|
-| **Prometheus** | Scrapes metrics from cAdvisor and app endpoints |
-| **cAdvisor** | Exposes per-container CPU, memory, and network metrics |
-| **metrics-server** | Provides resource metrics consumed by HPA |
-| **Grafana** | Visualizes metrics via pre-configured dashboards |
+| Component | Role | URL |
+|---|---|---|
+| **Prometheus** | Scrapes metrics from cAdvisor and app endpoints | http://localhost:9090 |
+| **cAdvisor** | Exposes per-container CPU, memory, and network metrics | http://localhost:8082 |
+| **metrics-server** | Provides resource metrics consumed by HPA | — |
+| **Grafana** | Visualizes metrics via pre-configured dashboards | http://localhost:3000 |
 
-
-| Service | URL |
-|---------|-----|
-| Grafana | http://localhost:3000 |
-| Prometheus | http://localhost:9090 |
-| cAdvisor | http://localhost:8082 |
-
-
-<img width="1917" height="855" alt="image" src="https://github.com/user-attachments/assets/4ff27a23-aefc-42a9-a68c-f8ba88f98d95" />
-
+<div align="center">
+<img width="1917" height="855" alt="Grafana Dashboard" src="https://github.com/user-attachments/assets/4ff27a23-aefc-42a9-a68c-f8ba88f98d95" />
+</div>
 
 ---
 
 ## 🖼 Screenshots
 
+<details>
 <summary>Kubernetes Cluster Output</summary>
+<div align="center">
+<img width="1190" height="486" alt="kubectl output" src="https://github.com/user-attachments/assets/461f2670-a6fd-48ec-9182-ddd85a2a467f" />
+</div>
+</details>
 
-<img width="1190" height="486" alt="image" src="https://github.com/user-attachments/assets/461f2670-a6fd-48ec-9182-ddd85a2a467f" />
-
-
+<details>
 <summary>App Routing via Ingress</summary>
+<div align="center">
+<img width="760" height="258" alt="curl routing" src="https://github.com/user-attachments/assets/57b44779-b993-4cd9-b636-690c6530eeb8" />
+</div>
+</details>
 
-<img width="760" height="258" alt="image" src="https://github.com/user-attachments/assets/57b44779-b993-4cd9-b636-690c6530eeb8" />
-
-
+<details>
 <summary>GitHub Actions — Successful Run</summary>
-
-<img width="1451" height="675" alt="image" src="https://github.com/user-attachments/assets/b8698706-5529-40e7-afcb-ebdbf8dba83c" />
-
+<div align="center">
+<img width="1451" height="675" alt="GitHub Actions" src="https://github.com/user-attachments/assets/b8698706-5529-40e7-afcb-ebdbf8dba83c" />
+</div>
+</details>
 
 ---
 
