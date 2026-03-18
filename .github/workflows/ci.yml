@@ -1,0 +1,25 @@
+name: Mini-PaaS CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        app: [app1, app2, app3, app4]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ matrix.app }}:ci ./${{ matrix.app }}
+
+      - name: Verify build
+        run: echo "${{ matrix.app }} build successful"
