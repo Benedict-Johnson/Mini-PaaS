@@ -77,8 +77,8 @@ The pipeline is triggered on every `push` to the repository.
 4. **Deploy Script** — Builds Docker images (via Minikube's Docker daemon) and applies `kubectl` manifests
 5. **Rollout** — Kubernetes performs a rolling update automatically
 
-![CI/CD Pipeline](docs/images/cicd-pipeline.png)
-*↑ Replace with your GitHub Actions workflow screenshot*
+<img width="537" height="432" alt="image" src="https://github.com/user-attachments/assets/47c5b673-fcdb-4b9a-bd07-0e6d31a610fb" />
+
 
 ---
 
