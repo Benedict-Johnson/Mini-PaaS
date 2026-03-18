@@ -163,27 +163,23 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 
 ## 🖼 Screenshots
 
-<details>
-<summary>Kubernetes Cluster Output</summary>
+**Kubernetes Cluster Output**
+
 <div align="center">
 <img width="1190" height="486" alt="kubectl output" src="https://github.com/user-attachments/assets/461f2670-a6fd-48ec-9182-ddd85a2a467f" />
 </div>
-</details>
 
-<details>
-<summary>App Routing via Ingress</summary>
+**App Routing via Ingress**
+
 <div align="center">
 <img width="760" height="258" alt="curl routing" src="https://github.com/user-attachments/assets/57b44779-b993-4cd9-b636-690c6530eeb8" />
 </div>
-</details>
 
-<details>
-<summary>GitHub Actions — Successful Run</summary>
+**GitHub Actions — Successful Run**
+
 <div align="center">
 <img width="1451" height="675" alt="GitHub Actions" src="https://github.com/user-attachments/assets/b8698706-5529-40e7-afcb-ebdbf8dba83c" />
 </div>
-</details>
-
 ---
 
 ## 🧠 Key Learnings
