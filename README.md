@@ -189,7 +189,8 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 <details>
 <summary>Kubernetes Cluster Output</summary>
 
-![kubectl get all](docs/images/kubectl-output.png)
+<img width="1190" height="486" alt="image" src="https://github.com/user-attachments/assets/461f2670-a6fd-48ec-9182-ddd85a2a467f" />
+
 
 </details>
 
