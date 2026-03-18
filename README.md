@@ -36,33 +36,7 @@ This project is scoped to **local development** using Minikube — it is not a c
 
 ## 🏗 Architecture
 
-```
-GitHub Repository
-      │
-      ▼
-GitHub Actions (CI/CD Trigger on Push)
-      │
-      ▼
-Self-Hosted Runner (WSL on local machine)
-      │
-      ├── Builds Docker images
-      ├── Applies Kubernetes manifests
-      │
-      ▼
-Minikube Cluster
-      │
-      ├── Deployments (per app)
-      ├── Services (ClusterIP)
-      ├── Ingress (domain-based routing)
-      ├── HPA (autoscaling)
-      └── Monitoring namespace
-            ├── Prometheus
-            ├── Grafana
-            └── cAdvisor + metrics-server
-```
-
-![Architecture Diagram](docs/images/architecture.png)
-*↑ Replace with your architecture diagram*
+<img width="642" height="511" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/18313bc5-02ac-4bce-a793-1460ece201cb" />
 
 ---
 
@@ -178,6 +152,14 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 | **cAdvisor** | Exposes per-container CPU, memory, and network metrics |
 | **metrics-server** | Provides resource metrics consumed by HPA |
 | **Grafana** | Visualizes metrics via pre-configured dashboards |
+
+
+| Service | URL |
+|---------|-----|
+| Grafana | http://localhost:3000 |
+| Prometheus | http://localhost:9090 |
+| cAdvisor | http://localhost:8082 |
+
 
 <img width="1917" height="855" alt="image" src="https://github.com/user-attachments/assets/4ff27a23-aefc-42a9-a68c-f8ba88f98d95" />
 
