@@ -195,7 +195,8 @@ The monitoring stack runs via Docker Compose alongside the Kubernetes cluster.
 **GitHub Actions — Successful Run**
 
 <div align="center">
-<img width="1451" height="675" alt="GitHub Actions" src="https://github.com/user-attachments/assets/b8698706-5529-40e7-afcb-ebdbf8dba83c" />
+<img width="1446" height="672" alt="image" src="https://github.com/user-attachments/assets/c6f3c642-cf3c-45dd-888c-004bce543cf7" />
+
 </div>
 
 ---
