@@ -193,7 +193,8 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 
 <summary>App Routing via Ingress</summary>
 
-![curl routing output](docs/images/curl-routing.png)
+<img width="760" height="258" alt="image" src="https://github.com/user-attachments/assets/57b44779-b993-4cd9-b636-690c6530eeb8" />
+
 
 <summary>GitHub Actions — Successful Run</summary>
 
