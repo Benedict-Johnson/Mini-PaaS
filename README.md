@@ -34,6 +34,19 @@ This project is scoped to **local development** using Minikube — it is not a c
 
 ---
 
+## 🗂 Legacy System Snapshot
+
+The original system used:
+
+- Bash script (`deploy.sh`) to build and run containers
+- Manual port assignment per application
+- NGINX reverse proxy for routing between services
+- No health checks, autoscaling, or resource management
+
+This system is preserved in the repository to highlight the architectural transition to Kubernetes.
+
+---
+
 ## 🏗 Architecture
 
 <div align="center">
@@ -46,11 +59,14 @@ This project is scoped to **local development** using Minikube — it is not a c
 
 The pipeline is triggered on every `push` to the repository.
 
+> ⚠️ Since the Kubernetes cluster runs locally on Minikube, a **self-hosted runner** is required to bridge GitHub Actions (cloud) with the local environment.
+> This allows CI/CD pipelines to execute `kubectl` and Docker commands directly against the local cluster.
+
 **Flow:**
 1. **Trigger** — Push to `main` kicks off the workflow
 2. **Matrix Build** — Multiple apps are built in parallel using a job matrix
 3. **Self-Hosted Runner** — A runner in WSL executes the deployment script locally
-4. **Deploy Script** — Builds Docker images (via Minikube's Docker daemon) and applies `kubectl` manifests
+4. **Deploy Script** — `deploy-k8s.sh` builds Docker images directly inside Minikube's Docker environment (`eval $(minikube docker-env)`) and applies `kubectl` manifests
 5. **Rollout** — Kubernetes performs a rolling update automatically
 
 <div align="center">
@@ -133,7 +149,8 @@ mini-paas/
 3. Self-hosted runner (WSL) picks up the job
          │
          ▼
-4. deploy.sh builds Docker image using Minikube's daemon
+4. deploy-k8s.sh builds Docker image using Minikube's Docker daemon
+   → eval $(minikube docker-env)
    → docker build + kubectl apply -f k8s/apps/<app>/
          │
          ▼
@@ -146,7 +163,7 @@ mini-paas/
 
 ## 📊 Monitoring
 
-The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
+The monitoring stack runs via Docker Compose alongside the Kubernetes cluster.
 
 | Component | Role | URL |
 |---|---|---|
@@ -180,6 +197,7 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 <div align="center">
 <img width="1451" height="675" alt="GitHub Actions" src="https://github.com/user-attachments/assets/b8698706-5529-40e7-afcb-ebdbf8dba83c" />
 </div>
+
 ---
 
 ## 🧠 Key Learnings
@@ -213,7 +231,7 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 
 ## 🛠 Tech Stack
 
-`Kubernetes` · `Minikube` · `Docker` · `GitHub Actions` · `Prometheus` · `Grafana` · `cAdvisor` · `NGINX Ingress` · `Bash` · `WSL`
+`Kubernetes` · `Docker` · `Minikube` · `GitHub Actions` · `Prometheus` · `Grafana` · `cAdvisor` · `NGINX Ingress` · `Bash` · `WSL`
 
 ---
 
