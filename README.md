@@ -198,7 +198,8 @@ The monitoring stack runs in a dedicated `monitoring` namespace inside Minikube.
 
 <summary>GitHub Actions — Successful Run</summary>
 
-![GitHub Actions](docs/images/github-actions.png)
+<img width="1451" height="675" alt="image" src="https://github.com/user-attachments/assets/b8698706-5529-40e7-afcb-ebdbf8dba83c" />
+
 
 ---
 
